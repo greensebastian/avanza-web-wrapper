@@ -4,6 +4,9 @@ const USER_CREDENTIALS = {
 	TOTPSECRET: '<totpSecret>'
 }
 
+const LISTEN = false
+
 module.exports = {
-	USER_CREDENTIALS
+	USER_CREDENTIALS,
+	LISTEN
 };
