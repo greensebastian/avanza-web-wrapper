@@ -1,5 +1,6 @@
 config.js
-
+linux/
+public_html
 
 #
 # General Node gitignore settings fetched from https://github.com/github/gitignore
