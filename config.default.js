@@ -6,7 +6,15 @@ const USER_CREDENTIALS = {
 
 const LISTEN = false
 
+const ENVS = {
+	PROD: 'prod',
+	DEV: 'dev'
+};
+const ENV = ENVS.DEV;
+
 module.exports = {
 	USER_CREDENTIALS,
-	LISTEN
+	LISTEN,
+	ENVS,
+	ENV
 };
