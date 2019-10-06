@@ -6,6 +6,9 @@ const avanza = new Avanza();
 const express = require('express');
 const app = express();
 
+// Load all controllers
+const controllers = require('./controllers');
+
 // Attempt to load config file
 var config_temp
 try {
@@ -16,67 +19,24 @@ try {
 }
 const config = config_temp;
 
-avanza.authenticate({
-	username: config.USER_CREDENTIALS.USERNAME,
-	password: config.USER_CREDENTIALS.PASSWORD,
-	totpSecret: config.USER_CREDENTIALS.TOTPSECRET
-}).then(authenticationResolved, authenticationRejected);
-
-async function authenticationResolved(){
-	console.log('Authenticated');
-	if (config.ENV === config.ENVS.PROD){
-		console.log('Production environment settings loaded');
-	}
-
-	else if (config.ENV === config.ENVS.DEV){
-		console.log('Developer environment settings loaded');
-		// console.log('Fetching overview...');
-		// const overview = await avanza.getOverview();
-		// console.log(overview);
-
-		// console.log('Fetching positions...');
-		// const positions = await avanza.getPositions();
-		// console.log(positions.instrumentPositions);
-		// for (var i = 0; i < positions.instrumentPositions.length; i++) {
-		// 	var instrument = positions.instrumentPositions[i];
-		// 	console.log('Fetching instrument type: ' + instrument.instrumentType);
-		// 	for (var j = 0; j < instrument.positions.length; j++) {
-		// 		var position = instrument.positions[j];
-		// 		const period = Avanza.ONE_YEAR;
-		// 		console.log('Fetching position: ' + position.name + " with orderbookId: " + position.orderbookId + " and period: " + period);
-		// 		const chartData = await avanza.getChartdata(position.orderbookId, period);
-		// 		console.log('Chart data for ' + position.name);
-		// 		console.log(chartData);
-		// 	}
-		// }
-	}
-}
-
-async function authenticationRejected(){
-	console.log('Authentication failed');
-}
-
+// Start web service
 app.listen(8000, () => {
 	console.log('Example app listening on port 8000!');
 });
 
 app.get('/', (req, res) => {
-	res.send('Hello Nodejs!');
+	controller = new controllers.AuthorizedController(avanza, config, req, res);
+	controller.send();
 });
 
 app.get('/avanza', (req, res) => {
-	console.log('\nIncoming request:\n');
-	console.log(req.query);
-	res.send('Hello Avanza!');
+	controller = new controllers.AuthorizedController(avanza, config, req, res);
+	controller.send();
 });
 
 app.get('/avanza/search', (req, res) => {
-	console.log('\nIncoming request:');
-	console.log(req.originalUrl);
-	console.log('Query:');
-	console.log(req.query);
-	
-	let output = search(req.query).then(output => res.send(output));
+	controller = new controllers.SearchController(avanza, config, req, res);
+	controller.send();
 });
 
 async function search(query) {
@@ -86,7 +46,12 @@ async function search(query) {
 				let instrumentType = result.hits[0].instrumentType;
 				let instrumentId = result.hits[0].topHits[0].id;
 				avanza.getInstrument(instrumentType, instrumentId).then(result => {
-					resolve('ISIN ' + query.isin + ' matched with ' + result.name);
+					if (query.isin === result.isin){
+						resolve('ISIN ' + query.isin + ' matched with ' + result.name);
+					}
+					else {
+						resolve('ISIN ' + query.isin + ' did not match any instrument');
+					}
 				});
 			});
 		});
@@ -149,4 +114,12 @@ function searchResultForTicker(ticker, result){
 		});
 	});
 	return match;
+}
+
+function isProduction(){
+	return config.ENV === config.ENVS.PROD;
+}
+
+function isDev(){
+	return config.ENV === config.ENVS.DEV;
 }
