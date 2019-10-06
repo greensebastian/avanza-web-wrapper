@@ -38,24 +38,3 @@ app.get('/avanza/search', (req, res) => {
 	controller = new controllers.SearchController(avanza, config, req, res);
 	controller.send();
 });
-
-// This is work in progress and definitely wrong
-function searchResultForTicker(ticker, result){
-	var match = null;
-	result.hits.forEach(hit => {
-		hit.topHits.forEach(topHit => {
-			if (topHit.tickerSymbol === ticker){
-				match = topHit;
-			}
-		});
-	});
-	return match;
-}
-
-function isProduction(){
-	return config.ENV === config.ENVS.PROD;
-}
-
-function isDev(){
-	return config.ENV === config.ENVS.DEV;
-}

@@ -64,7 +64,7 @@ class SearchController extends AuthorizedController {
 				}
 			});
 		} else {
-			return Promise.reject();
+			return Promise.reject('Search query must contain q or isin parameters');
 		}
 	}
 }
