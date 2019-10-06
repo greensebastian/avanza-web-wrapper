@@ -24,7 +24,8 @@ class SearchController extends AuthorizedController {
 					let instrumentId = result.hits[0].topHits[0].id;
 					this.avanza.getInstrument(instrumentType, instrumentId).then(result => {
 						if (query.isin === result.isin) {
-							resolve('ISIN ' + query.isin + ' matched with ' + result.name);
+							//resolve('ISIN ' + query.isin + ' matched with ' + result.name);
+							resolve(result);
 						} else {
 							resolve('ISIN ' + query.isin + ' did not match any instrument');
 						}
