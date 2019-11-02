@@ -1,14 +1,14 @@
 const USER_CREDENTIALS = {
-	USERNAME: '<username>',
-	PASSWORD: '<password>',
-	TOTPSECRET: '<totpSecret>'
-}
+	USERNAME: "<username>",
+	PASSWORD: "<password>",
+	TOTPSECRET: "<totpSecret>"
+};
 
-const LISTEN = false
+const LISTEN = false;
 
 const ENVS = {
-	PROD: 'prod',
-	DEV: 'dev'
+	PROD: "prod",
+	DEV: "dev"
 };
 const ENV = ENVS.DEV;
 

@@ -1,5 +1,4 @@
 class FormatHelper {
-
 	static searchToList(searchResult) {
 		let output = [];
 		searchResult.hits.forEach(function(instrumentCategory) {
@@ -17,4 +16,4 @@ class FormatHelper {
 
 module.exports = {
 	FormatHelper
-}
+};

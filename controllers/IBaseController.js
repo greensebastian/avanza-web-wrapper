@@ -1,9 +1,13 @@
 class IBaseController {
-	constructor(){
-		this.typeErrorMessagePrefix = 'IBaseController implementations must implement: ';
+	constructor() {
+		this.typeErrorMessagePrefix =
+			"IBaseController implementations must implement: ";
 
-		if (!this.send){
-			throw new TypeError(typeErrorMessagePrefix + 'send');
+		if (!this.send) {
+			throw new TypeError(this.typeErrorMessagePrefix + "send");
+		}
+		if (!this.process) {
+			throw new TypeError(this.typeErrorMessagePrefix + "send");
 		}
 	}
 }

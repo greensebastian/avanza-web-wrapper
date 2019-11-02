@@ -1,5 +1,5 @@
-const IBaseController = require('./IBaseController.js');
-class BaseController extends IBaseController{
+const IBaseController = require("./IBaseController.js");
+class BaseController extends IBaseController {
 	constructor(avanza, config, request, response) {
 		super();
 		this.avanza = avanza;
@@ -8,11 +8,10 @@ class BaseController extends IBaseController{
 		this.response = response;
 	}
 
-	errorResponse(message){
-		if (!message){
-			return 'An internal error occured';
-		}
-		else {
+	errorResponse(message) {
+		if (!message) {
+			return "An internal error occured";
+		} else {
 			return message;
 		}
 	}

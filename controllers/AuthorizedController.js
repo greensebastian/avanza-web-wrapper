@@ -1,16 +1,19 @@
-const BaseController = require('./BaseController.js');
+const BaseController = require("./BaseController.js");
 
 class AuthorizedController extends BaseController {
-	constructor(avanza, config, request, response){
+	constructor(avanza, config, request, response) {
 		super(avanza, config, request, response);
 	}
 
-	send(){
-		this.authenticate().then(resolved => {
-			this.response.send('Avanza authentication succeeded');
-		}, rejected => {
-			this.response.send(this.authenticationErrorResponse())
-		});
+	send() {
+		this.authenticate().then(
+			resolved => {
+				this.response.send("Avanza authentication succeeded");
+			},
+			rejected => {
+				this.response.send(this.authenticationErrorResponse());
+			}
+		);
 	}
 
 	authenticate() {
@@ -25,11 +28,10 @@ class AuthorizedController extends BaseController {
 		}
 	}
 
-	authenticationErrorResponse(message){
-		if (!message){
-			return 'An Avanza authentication error occured';
-		}
-		else {
+	authenticationErrorResponse(message) {
+		if (!message) {
+			return "An Avanza authentication error occured";
+		} else {
 			return message;
 		}
 	}
