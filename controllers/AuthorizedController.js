@@ -5,15 +5,18 @@ class AuthorizedController extends BaseController {
 		super(avanza, config, request, response);
 	}
 
+	async process() {
+		try {
+			await this.authenticate();
+		} catch (rejected){
+			console.log("Authentication rejected", rejected);
+			return this.returnError(500, this.authenticationErrorResponse());
+		}
+		this.send();
+	}
+
 	send() {
-		this.authenticate().then(
-			resolved => {
-				this.response.send("Avanza authentication succeeded");
-			},
-			rejected => {
-				this.response.send(this.authenticationErrorResponse());
-			}
-		);
+		this.response.send("Avanza authentication succeeded");
 	}
 
 	authenticate() {

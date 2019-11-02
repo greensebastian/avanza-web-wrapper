@@ -7,7 +7,7 @@ class IBaseController {
 			throw new TypeError(this.typeErrorMessagePrefix + "send");
 		}
 		if (!this.process) {
-			throw new TypeError(this.typeErrorMessagePrefix + "send");
+			throw new TypeError(this.typeErrorMessagePrefix + "process");
 		}
 	}
 }

@@ -8,6 +8,10 @@ class BaseController extends IBaseController {
 		this.response = response;
 	}
 
+	returnError(status, message){
+		this.response.status(status).send(message);
+	}
+
 	errorResponse(message) {
 		if (!message) {
 			return "An internal error occured";

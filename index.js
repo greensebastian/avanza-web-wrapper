@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 		req,
 		res
 	);
-	controller.send();
+	controller.process();
 });
 
 app.get("/avanza", (req, res) => {
@@ -45,12 +45,12 @@ app.get("/avanza", (req, res) => {
 		req,
 		res
 	);
-	controller.send();
+	controller.process();
 });
 
 app.get("/avanza/search", (req, res) => {
 	let controller = new controllers.SearchController(avanza, config, req, res);
-	controller.send();
+	controller.process();
 });
 
 /*

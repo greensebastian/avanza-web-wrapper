@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "node --inspect index.js",
+    "list": "netstat -ano | find 'LISTENING' | find '8000'",
+    "killall": "taskkill /f /im node.exe",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

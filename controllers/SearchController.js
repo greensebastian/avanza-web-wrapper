@@ -6,19 +6,12 @@ class SearchController extends AuthorizedController {
 	}
 
 	send() {
-		this.authenticate().then(
+		this.search(this.request.query).then(
 			resolved => {
-				this.search(this.request.query).then(
-					resolved => {
-						this.response.send(resolved);
-					},
-					rejected => {
-						this.response.send(this.errorResponse("Search failed"));
-					}
-				);
+				this.response.send(resolved);
 			},
 			rejected => {
-				this.response.send(this.authenticationErrorResponse());
+				this.response.send(this.errorResponse("Search failed"));
 			}
 		);
 	}
