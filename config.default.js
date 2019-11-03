@@ -1,9 +1,3 @@
-const USER_CREDENTIALS = {
-	USERNAME: "<username>",
-	PASSWORD: "<password>",
-	TOTPSECRET: "<totpSecret>"
-};
-
 const SESSION_STORE_OPTIONS = {
 	host: "<session-db-host>",
 	port: "<session-db-port>",
@@ -21,7 +15,6 @@ const ENVS = {
 const ENV = ENVS.DEV;
 
 module.exports = {
-	USER_CREDENTIALS,
 	SESSION_STORE_OPTIONS,
 	SESSION_STORE_SECRET,
 	SESSION_MAXAGE,
