@@ -12,6 +12,7 @@ const SESSION_STORE_OPTIONS = {
 	database: "<session-db>"
 };
 const SESSION_STORE_SECRET = "<session-store-secret>";
+const SESSION_MAXAGE = 1000 * 60 * 10;
 
 const ENVS = {
 	PROD: "prod",
@@ -23,6 +24,7 @@ module.exports = {
 	USER_CREDENTIALS,
 	SESSION_STORE_OPTIONS,
 	SESSION_STORE_SECRET,
+	SESSION_MAXAGE,
 	ENVS,
 	ENV
 };

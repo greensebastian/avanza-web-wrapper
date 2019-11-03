@@ -1,7 +1,3 @@
-// Load avanza package
-const Avanza = require("avanza");
-const avanza = new Avanza();
-
 // Load web service functions
 const express = require("express");
 const app = express();
@@ -38,7 +34,8 @@ const currentSession = new session({
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
-		secure: false
+		secure: false,
+		maxAge: config.SESSION_MAXAGE
 	}
 });
 app.use(currentSession);
@@ -49,27 +46,17 @@ const server = app.listen(8000, () => {
 });
 
 app.get("/", (req, res) => {
-	let controller = new controllers.AuthorizedController(
-		avanza,
-		config,
-		req,
-		res
-	);
+	let controller = new controllers.OverviewController(config, req, res);
 	controller.process();
 });
 
-app.get("/avanza", (req, res) => {
-	let controller = new controllers.AuthorizedController(
-		avanza,
-		config,
-		req,
-		res
-	);
+app.get("/search", (req, res) => {
+	let controller = new controllers.SearchController(config, req, res);
 	controller.process();
 });
 
-app.get("/avanza/search", (req, res) => {
-	let controller = new controllers.SearchController(avanza, config, req, res);
+app.get("/logout", (req, res) => {
+	let controller = new controllers.LogoutController(config, req, res);
 	controller.process();
 });
 
@@ -78,7 +65,7 @@ app.get("/avanza/search", (req, res) => {
  */
 function exitHandler(options, exitCode) {
 	if (options.cleanup) {
-		avanza.disconnect();
+		//avanza.disconnect();
 	}
 	if (exitCode || exitCode === 0) console.log(exitCode);
 	if (options.exit) process.exit();

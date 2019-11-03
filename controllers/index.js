@@ -1,7 +1,9 @@
-const AuthorizedController = require("./AuthorizedController.js");
+const LogoutController = require("./LogoutController.js");
 const SearchController = require("./SearchController.js");
+const OverviewController = require("./OverviewController.js");
 
 module.exports = {
-	AuthorizedController,
-	SearchController
+	SearchController,
+	OverviewController,
+	LogoutController
 };
