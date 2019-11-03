@@ -8,7 +8,7 @@ class BaseController extends IBaseController {
 		this.response = response;
 	}
 
-	returnError(status, message){
+	returnError(status, message) {
 		this.response.status(status).send(message);
 	}
 

@@ -10,6 +10,7 @@ class AuthorizedController extends BaseController {
 			await this.authenticate();
 		} catch (rejected){
 			console.log("Authentication rejected", rejected);
+			this.request.session.test = "1";
 			return this.returnError(500, this.authenticationErrorResponse());
 		}
 		this.send();

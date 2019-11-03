@@ -5,6 +5,12 @@ const avanza = new Avanza();
 // Load web service functions
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
+
+// Load cryptography package
+const sjcl = require("sjcl");
 
 // Load all controllers
 const controllers = require("./controllers");
@@ -14,14 +20,28 @@ var path = require("path");
 global.rootPath = path.resolve(__dirname);
 
 // Attempt to load config file
-var config_temp;
+var configTemp;
 try {
-	config_temp = require("./config.js");
+	configTemp = require("./config.js");
 } catch (e) {
 	console.log("No valid config found, modify and rename config.default.js");
 	return;
 }
-const config = config_temp;
+const config = configTemp;
+
+// Set up session store
+app.use(cookieParser());
+const sessionStore = new MySQLStore(config.SESSION_STORE_OPTIONS);
+const currentSession = new session({
+	secret: sjcl.hash.sha256.hash(config.SESSION_STORE_SECRET).toString(),
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		secure: false
+	}
+});
+app.use(currentSession);
 
 // Start web service
 const server = app.listen(8000, () => {
